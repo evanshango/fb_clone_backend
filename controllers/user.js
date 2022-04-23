@@ -50,7 +50,7 @@ exports.signup = async (req, res) => {
         sendVerificationEmail(savedUser.email, savedUser.firstName, url)
 
         return userInfo(
-            savedUser, res, 'Registration Successful. Please activate your account by clicking on the activation link sent on your email'
+            savedUser, res, 'Registration successful. Please activate your account by clicking on the activation link sent on your email'
         )
 
     } catch (err) {
@@ -63,18 +63,15 @@ exports.signin = async (req, res) => {
         const {email, password} = req.body
         const existing = await User.findOne({email})
         if (!existing) return res.status(404).json({
-            status: 'Not found',
             message: 'Looks like the email address entered is not connected to an account...'
         })
         const validPass = await decryptPassword(existing['password'], password)
         if (!validPass) return res.status(401).json({
-            status: 'Unauthorized',
             message: 'Invalid credentials. Please try again...'
         })
         return userInfo(existing, res, 'Signin success..')
     } catch (e) {
         return res.status(400).json({
-            status: 'Bad request',
             message: 'An error occurred while trying to authenticate. Please try again...'
         })
     }

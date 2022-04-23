@@ -12,7 +12,7 @@ app.use(express.json())
 const environment = () => {
     const envProps = {}
     const env = process.env.NODE_ENV
-    if (env === 'production'){
+    if (env === 'production') {
         const MONGO_URI = process.env.MONGO_URI_PROD
         const DB_PASSWORD = process.env.DB_PASSWORD
         const DB = process.env.DB
@@ -28,20 +28,12 @@ const environment = () => {
     return envProps
 }
 
-let allowedOrigins = [process.env.ORIGINS]
+let allowedOrigins = process.env.ORIGINS.split(',')
 
 const options = (req, res) => {
-    let tmp
-    let origin = req.header('Origin')
-    if (allowedOrigins.indexOf(origin) > -1) {
-        tmp = {
-            origin: true, optionsSuccessStatus: 200
-        }
-    } else {
-        tmp = {
-            origin: false
-        }
-    }
+    let tmp, origin = req.header('Origin')
+    if (allowedOrigins.indexOf(origin) > -1) tmp = {origin: true, optionsSuccessStatus: 200}
+    else tmp = {origin: false}
     return res(null, tmp)
 }
 
