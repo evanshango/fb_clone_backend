@@ -22,9 +22,15 @@ exports.userInformation = (model) => {
 }
 
 exports.generateToken = (payload, expiry) => {
-    return jwt.sign(payload, process.env.TOKEN_SECRET, {
-        expiresIn: expiry
-    })
+    return jwt.sign(payload, process.env.TOKEN_SECRET, {expiresIn: expiry})
+}
+
+exports.generateCode = (codeLength) => {
+    let code = ''
+    let schema = '0123456789'
+    for (let i = 0; i < codeLength; i++)
+        code += schema[Math.round(Math.random() * (schema.length - 1))]
+    return code
 }
 
 exports.dbState = [{

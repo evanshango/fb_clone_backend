@@ -1,11 +1,11 @@
 const express = require('express')
-const {signup, activateAccount, signin} = require("../controllers/user")
+const {fetchCurrentUser, fetchUserByEmail} = require("../controllers/user")
+const {currentUser} = require("../middlewares/auth")
 
 const router = express.Router()
 
 router
-    .post('/auth/signup', signup)
-    .post('/auth/signin', signin)
-    .post('/auth/activate', activateAccount)
+    .get('/users', fetchUserByEmail)
+    .get('/users/current', currentUser, fetchCurrentUser)
 
 module.exports = router
