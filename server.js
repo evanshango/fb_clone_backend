@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require('mongoose')
 const cors = require('cors')
+const fileUpload = require('express-fileupload')
 const {readdirSync} = require('fs')
 const {dbState} = require("./helpers/utils")
 require('dotenv').config()
@@ -38,7 +39,7 @@ const options = (req, res) => {
 }
 
 app.use(cors(options))
-
+app.use(fileUpload())
 //routes
 readdirSync("./routes").map((r) => app.use('/api/v1', require(`./routes/${r}`)))
 

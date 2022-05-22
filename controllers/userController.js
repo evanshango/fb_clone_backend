@@ -1,9 +1,9 @@
-const User = require('../models/userModel')
+const UserController = require('../models/userModel')
 
 exports.fetchCurrentUser = async (req, res) => {
     try {
         const {user} = req
-        const existing = await User.findById(user.id)
+        const existing = await UserController.findById(user.id)
         if (!existing) return res.status(404).json({message: 'Auth not found'})
 
         const {_id, firstName, lastName, username, verified, picture, email} = existing
@@ -24,7 +24,7 @@ exports.fetchUserByEmail = async (req, res) => {
 
         if (!email) return
 
-        const existing = await User.findOne({email})
+        const existing = await UserController.findOne({email})
         if (!existing) return res.status(404).json({message: 'Account with that email not found'})
         return res.status(200).json({
             email: existing['email'],

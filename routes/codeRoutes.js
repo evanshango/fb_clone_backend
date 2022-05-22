@@ -1,5 +1,5 @@
 const express = require('express')
-const {verificationCode, verificationLink, validateResetCode} = require("../controllers/verification")
+const {verificationCode, verificationLink, validateResetCode} = require("../controllers/verificationController")
 const {currentUser} = require("../middlewares/auth")
 
 const router = express.Router()
